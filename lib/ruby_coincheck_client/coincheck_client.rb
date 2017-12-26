@@ -45,6 +45,14 @@ class CoincheckClient
     request_for_get(uri, headers)
   end
 
+  def read_transactions_pagination(limit: nil, order: "desc", starting_after: nil, ending_before: nil)
+    params = { limit: limit, order: order, starting_after: starting_after, ending_before: ending_before }
+    uri = URI.parse @@base_url + "api/exchange/orders/transactions_pagination"
+    uri.query = URI.encode_www_form(params)
+    headers = get_signature(uri, @key, @secret)
+    request_for_get(uri, headers)
+  end
+
   def read_positions(status: nil)
     params = { status: status }
     uri = URI.parse @@base_url + "api/exchange/leverage/positions"
